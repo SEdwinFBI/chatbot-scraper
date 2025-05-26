@@ -2,8 +2,8 @@
 
 const ChatHeader = () => {
   return (
-    <header className="bg-blue-900 py-7 top-0 fixed w-full z-20 rounded-b-lg text-center text-white">
-        <h1>Prototipo</h1>
+    <header className="bg-yellow-800  py-7 top-0 fixed w-full z-20 rounded-b-lg text-center text-white shadow-xl">
+        <h1>IA WIKI Demo</h1>
     </header>
   )
 }

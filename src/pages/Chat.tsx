@@ -1,60 +1,65 @@
 import { useEffect, useState } from "react"
 import ChatContent from "../components/ChatContent"
 import ChatHeader from "../components/ChatHeader"
-import ChatMesagges from "../components/ChatMesagges"
+import ChatMessage from "../components/ChatMessages"
 import MainLayout from "../layout/MainLayout"
 import { postQuestion } from '../api/PostApi';
 
 
 const Chat = () => {
-    const [mes, setMes] = useState("")
-    const [res, setRes] = useState("");
+    const [chat, setChat] = useState("")
+    const [isLoading, setIsLoading]=useState(false)
+    
+    const [response, setResponse] = useState("");
     const [messages, setMessages] = useState<{
-        mensaje: string
-        tipe: string,
-         chat:boolean
+        message: string
+        typeAlign: string,
+        isChatbot: boolean
     }[]>([])
-    console.log(mes)
-    const question = async () => {
 
-        const response = await postQuestion(mes)
-        setRes(response)
+    const question = async () => {
+        setIsLoading(true);
+        const response = await postQuestion(chat)
+        setResponse(response)
+
     }
     useEffect(() => {
-        if (mes != "") {
-            question();
+        if (chat != "") {
+            question().then(
+                ()=>setIsLoading(false)
+            )
         }
-    }, [mes])
+    }, [chat])
 
 
     useEffect(() => {
-        if (mes != "") {
+        if (chat != "") {
             setMessages((prev) => [
                 ...prev, {
-                    mensaje: mes,
-                    tipe: "self-end",
-                    chat:false,
+                    message: chat,
+                    typeAlign: "self-end",
+                    isChatbot: false,
                 }
             ])
         }
-    }, [mes])
+    }, [chat])
     useEffect(() => {
-       if(res!=""){
-         setMessages((prev) => [
-            ...prev, {
-                mensaje: res,
-                tipe: "self-start",
-                     chat:true,
-            }
-        ])
-       }
-    }, [res])
+        if (response != "") {
+            setMessages((prev) => [
+                ...prev, {
+                    message: response,
+                    typeAlign: "self-start",
+                    isChatbot: true,
+                }
+            ])
+        }
+    }, [response])
 
     return (
         <MainLayout>
             <ChatHeader />
-            <ChatContent mesagges={messages} />
-            <ChatMesagges setmes={setMes} mes={mes} />
+            <ChatContent messages={messages} loading={isLoading} />
+            <ChatMessage setInChat={setChat} />
         </MainLayout>
     )
 }

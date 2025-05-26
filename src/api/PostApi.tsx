@@ -6,9 +6,10 @@ export const postQuestion = async (question: string) => {
             question: question
         }
         const response = await api.post("/ask", quest)
-        console.log("Respuesta del servidor:", response.data); // Asegúrate de que se imprima
-        return response.data; // Retorna los datos para usarlos en el componente
+    //  console.log("Respuesta del servidor:", response.data); 
+        return response.data; 
     } catch (error) {
-        console.error("Error al enviar la pregunta:", error);
+        
+        return "Upss! ocurrio un problema, intenta de nuevo mas tarde. codigo 2"
     }
 }
