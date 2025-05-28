@@ -1,6 +1,6 @@
 import { useEffect, useRef, type FC } from "react"
 import Message from "./Message"
-import imgChatbot from "../../public/img/chatbot.png"
+import imgChatbot from "/img/chatbot.png"
 
 type ChatContentprop = {
   messages: {
